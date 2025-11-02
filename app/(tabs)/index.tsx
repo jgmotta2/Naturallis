@@ -1,31 +1,32 @@
-import { StyleSheet } from 'react-native';
+import { Text } from "@/components/Themed";
+import { Image, ImageBackground, StyleSheet } from "react-native";
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
-
-export default function TabOneScreen() {
+export default function LoginScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    <ImageBackground
+      source={require("@/assets/images/Login-background.png")}
+      style={styles.background}
+    >
+      <ImageBackground style={styles.container} />
+      <Image source={require("@/assets/images/ramo.png")} />
+      <Image source={require("@/assets/images/logo.png")} />
+      <Text lightColor="white" size="large">
+        UM DOIS TRES
+      </Text>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
 });
