@@ -30,17 +30,27 @@ export function useThemeColor(
   }
 }
 
-export function Text(props: TextProps & { size: "large" | "medium" }) {
+export function Text(
+  props: TextProps & { size?: "large" | "medium" | "small"; isBold?: boolean }
+) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
   const size = {
     large: 32,
     medium: 16,
+    small: 12,
   };
 
   return (
     <DefaultText
-      style={[{ color, fontSize: size[props.size] }, style]}
+      style={[
+        {
+          color: lightColor ? color : Colors.light.primaryColor,
+          fontSize: size[props.size || "medium"],
+          fontWeight: props.isBold ? "bold" : "regular",
+        },
+        style,
+      ]}
       {...otherProps}
     />
   );

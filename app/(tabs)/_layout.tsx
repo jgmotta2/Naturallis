@@ -2,6 +2,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import React from "react";
 
+import { RouteHeader } from "@/components/RouteHeader";
 import { useColorScheme } from "@/components/useColorScheme";
 import Colors from "@/constants/Colors";
 
@@ -27,10 +28,10 @@ export default function TabLayout() {
         options={{ header: () => <></>, tabBarStyle: { display: "none" } }}
       />
       <Tabs.Screen
-        name="two"
+        name="login-screen"
         options={{
-          title: "Tab Two",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          header: () => <RouteHeader />,
+          tabBarStyle: { display: "none" },
         }}
       />
     </Tabs>

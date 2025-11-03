@@ -1,18 +1,31 @@
+import { Button } from "@/components/Button";
 import { Text } from "@/components/Themed";
-import { Image, ImageBackground, StyleSheet } from "react-native";
+import { Image, ImageBackground, StyleSheet, View } from "react-native";
 
-export default function LoginScreen() {
+export default function HomeScreen() {
   return (
     <ImageBackground
       source={require("@/assets/images/Login-background.png")}
       style={styles.background}
     >
-      <ImageBackground style={styles.container} />
-      <Image source={require("@/assets/images/ramo.png")} />
-      <Image source={require("@/assets/images/logo.png")} />
-      <Text lightColor="white" size="large">
-        UM DOIS TRES
-      </Text>
+      <View style={styles.container}>
+        <Image
+          source={require("@/assets/images/Branch-icon.png")}
+          style={styles.icon}
+        />
+        <Image source={require("@/assets/images/Naturallis-logo.png")} />
+
+        <Text lightColor="white" size="large" isBold style={{ marginTop: 26 }}>
+          Reconecte-se.
+        </Text>
+        <Text lightColor="white" size="large" isBold>
+          É natural.
+        </Text>
+        <View style={styles.buttons}>
+          <Button href="/(tabs)/login-screen">Fazer login</Button>
+          <Button isSecondary>Criar conta</Button>
+        </View>
+      </View>
     </ImageBackground>
   );
 }
@@ -20,13 +33,24 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
 
   container: {
-    ...StyleSheet.absoluteFillObject,
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.5)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  icon: {
+    alignItems: "center",
+    marginLeft: 30,
+  },
+
+  buttons: {
+    marginTop: 70,
+    flexDirection: "column",
+    gap: 10,
+    paddingVertical: 30,
   },
 });
