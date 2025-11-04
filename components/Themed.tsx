@@ -31,12 +31,16 @@ export function useThemeColor(
 }
 
 export function Text(
-  props: TextProps & { size?: "large" | "medium" | "small"; isBold?: boolean }
+  props: TextProps & {
+    size?: "large" | "medium" | "small" | "big";
+    isBold?: boolean;
+  }
 ) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
   const size = {
     large: 32,
+    big: 20,
     medium: 16,
     small: 12,
   };

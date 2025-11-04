@@ -17,8 +17,10 @@ export function RouteHeader(props: Props) {
           color={Colors.light.primaryColor}
           style={{ marginBottom: -3 }}
         />
-        <Text>{props.children}</Text>
       </TouchableOpacity>
+      <Text size="big" isBold style={{ paddingLeft: 70 }}>
+        {props.children}
+      </Text>
     </View>
   );
 }

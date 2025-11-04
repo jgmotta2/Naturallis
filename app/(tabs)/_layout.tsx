@@ -34,6 +34,13 @@ export default function TabLayout() {
           tabBarStyle: { display: "none" },
         }}
       />
+      <Tabs.Screen
+        name="register-screen"
+        options={{
+          header: () => <RouteHeader>Cadastrar conta</RouteHeader>,
+          tabBarStyle: { display: "none" },
+        }}
+      />
     </Tabs>
   );
 }
