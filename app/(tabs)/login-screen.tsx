@@ -20,6 +20,11 @@ export default function LoginScreen() {
           Clique aqui e cadastre-se
         </Link>
       </View>
+      <View>
+        <Link href={"/(tabs)/forgot-password-screen"} style={styles.link}>
+          Esqueci minha senha
+        </Link>
+      </View>
     </View>
   );
 }

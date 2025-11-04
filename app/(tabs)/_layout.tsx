@@ -41,6 +41,14 @@ export default function TabLayout() {
           tabBarStyle: { display: "none" },
         }}
       />
+
+      <Tabs.Screen
+        name="forgot-password-screen"
+        options={{
+          header: () => <RouteHeader />,
+          tabBarStyle: { display: "none" },
+        }}
+      />
     </Tabs>
   );
 }
