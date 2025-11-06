@@ -1,17 +1,16 @@
-import { StyleSheet } from "react-native";
-
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Text, View } from "@/components/Themed";
 import Colors from "@/constants/Colors";
 import { Link } from "expo-router";
+import { StyleSheet } from "react-native";
 
 export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <Input placeholder="E-mail" />
       <Input placeholder="Senha" />
-      <Button>Entrar</Button>
+      <Button href="/(tabs)/home-screen">Entrar</Button>
       <View style={styles.registerContainer}>
         <Text lightColor={Colors.light.primaryColor} size="small">
           Ainda não tem conta?

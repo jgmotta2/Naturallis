@@ -49,6 +49,14 @@ export default function TabLayout() {
           tabBarStyle: { display: "none" },
         }}
       />
+
+      <Tabs.Screen
+        name="home-screen"
+        options={{
+          header: () => <></>,
+          tabBarStyle: { display: "none" },
+        }}
+      />
     </Tabs>
   );
 }

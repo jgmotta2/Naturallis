@@ -26,6 +26,7 @@ export function Button(props: Props) {
     >
       <Text
         lightColor={props.isSecondary ? "#41744E" : "white"}
+        darkColor={props.isSecondary ? "#41744E" : "white"}
         size="medium"
         isBold
       >
