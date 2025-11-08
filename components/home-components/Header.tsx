@@ -61,11 +61,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
   },
-
-  inputSearchIcon: {
-    position: "absolute",
-    left: 20,
-    top: 20,
-    zIndex: 1,
-  },
 });
