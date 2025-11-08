@@ -54,7 +54,6 @@ export default function TabLayout() {
         name="home-screen"
         options={{
           header: () => <></>,
-          tabBarStyle: { display: "none" },
         }}
       />
     </Tabs>

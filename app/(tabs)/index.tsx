@@ -1,5 +1,6 @@
 import { Button } from "@/components/Button";
 import { Text } from "@/components/Themed";
+import { CONTAINER_PADDING } from "@/constants/Container";
 import { Image, ImageBackground, StyleSheet, View } from "react-native";
 
 export default function HomeScreen() {
@@ -54,5 +55,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: 10,
     paddingVertical: 30,
+    width: "100%",
+    padding: CONTAINER_PADDING,
   },
 });

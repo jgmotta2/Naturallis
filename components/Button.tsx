@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 45,
-    width: 370,
+    width: "100%",
   },
 
   secondaryButton: {
@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 45,
-    width: 370,
     borderColor: "#41744E",
     borderWidth: 2,
   },

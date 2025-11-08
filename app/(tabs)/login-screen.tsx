@@ -2,6 +2,7 @@ import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Text, View } from "@/components/Themed";
 import Colors from "@/constants/Colors";
+import { CONTAINER_PADDING } from "@/constants/Container";
 import { Link } from "expo-router";
 import { StyleSheet } from "react-native";
 
@@ -30,6 +31,7 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    padding: CONTAINER_PADDING,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

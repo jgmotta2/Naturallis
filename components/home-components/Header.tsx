@@ -1,6 +1,9 @@
 import Colors from "@/constants/Colors";
+import { CONTAINER_PADDING } from "@/constants/Container";
 import { useState } from "react";
 import { StyleSheet, Switch } from "react-native";
+import { FilterButton } from "../FilterButton";
+import { Input } from "../Input";
 import { Text, View } from "../Themed";
 
 export function Header() {
@@ -9,7 +12,7 @@ export function Header() {
   return (
     <View style={styles.container}>
       <View style={styles.greetings}>
-        <Text>Bem-vindo Pedro</Text>
+        <Text>Bem-vindo Pedro!</Text>
         <View style={styles.switch}>
           <Text>{!switchState ? "BRL" : "USD"}</Text>
           <Switch
@@ -22,13 +25,29 @@ export function Header() {
           />
         </View>
       </View>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 12,
+        }}
+      >
+        <View style={{ flex: 1 }}>
+          <Input iconName="search" placeholder="Busque aqui" />
+        </View>
+
+        <View>
+          <FilterButton />
+        </View>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 24,
+    padding: CONTAINER_PADDING,
   },
 
   greetings: {
@@ -41,5 +60,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
+  },
+
+  inputSearchIcon: {
+    position: "absolute",
+    left: 20,
+    top: 20,
+    zIndex: 1,
   },
 });
