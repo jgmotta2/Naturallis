@@ -1,3 +1,4 @@
+import { CategorySection } from "@/components/home-components/CategorySection";
 import { Header } from "@/components/home-components/Header";
 import { HeroSection } from "@/components/home-components/HeroSection";
 import { View } from "@/components/Themed";
@@ -8,6 +9,7 @@ export default function () {
     <View style={styles.container}>
       <Header />
       <HeroSection />
+      <CategorySection/>
     </View>
   );
 }
@@ -15,6 +17,7 @@ export default function () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    
   },
 
   nutsImage: {
