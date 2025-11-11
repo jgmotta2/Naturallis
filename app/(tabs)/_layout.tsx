@@ -27,6 +27,15 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
+        name="index"
+        options={{
+          header: () => <></>,
+          href: null,
+          tabBarStyle: { display: "none" },
+        }}
+      />
+
+      <Tabs.Screen
         name="home-screen"
         options={{
           header: () => <></>,
@@ -41,9 +50,9 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="index"
+        name="favorites-screen"
         options={{
-          header: () => <></>,
+          header: () => <RouteHeader>Produtos Favoritos</RouteHeader>,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="heart-outline"
@@ -51,7 +60,6 @@ export default function TabLayout() {
               size={30}
             />
           ),
-          tabBarStyle: { display: "none" },
         }}
       />
 
@@ -71,9 +79,9 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="register-screen"
+        name="user-screen"
         options={{
-          header: () => <RouteHeader>Cadastrar conta</RouteHeader>,
+          header: () => <RouteHeader>Tela do usuário</RouteHeader>,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="person-outline"
@@ -81,7 +89,14 @@ export default function TabLayout() {
               size={30}
             />
           ),
-          tabBarStyle: { display: "none" },
+        }}
+      />
+
+      <Tabs.Screen
+        name="register-screen"
+        options={{
+          header: () => <RouteHeader>Cadastrar conta</RouteHeader>,
+          href: null,
         }}
       />
 
