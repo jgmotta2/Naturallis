@@ -33,7 +33,7 @@ export function Header() {
           gap: 12,
         }}
       >
-        <View style={{ flex: 1 }}>
+        <View style={{flex: 1}}>
           <Input iconName="search" placeholder="Busque aqui" />
         </View>
 
@@ -61,4 +61,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
   },
+
 });

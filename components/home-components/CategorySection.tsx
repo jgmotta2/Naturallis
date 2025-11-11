@@ -1,7 +1,6 @@
 import { CONTAINER_PADDING } from "@/constants/Container";
 import { Link } from "expo-router";
 import { useState } from "react";
-// Importe o TouchableOpacity para fazer os itens clicáveis
 import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { Text, View } from "../Themed";
 

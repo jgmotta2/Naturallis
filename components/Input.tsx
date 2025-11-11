@@ -37,17 +37,18 @@ export function Input(props: Props) {
 }
 
 const styles = StyleSheet.create({
-  input: {
-    backgroundColor: "#c7fdccff",
-    height: 60,
-    borderRadius: 45,
-    paddingLeft: 60,
-    color: "#41744E",
-  },
-
+ 
   inputContainer: {
     position: "relative",
     width: "100%",
+  },
+
+ input: {
+    backgroundColor: "#c7fdccff",
+    height: 60,
+    borderRadius: 45,
+    color: "#41744E",
+    textAlign: 'center'
   },
 
   inputIcon: {

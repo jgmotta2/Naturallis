@@ -1,6 +1,7 @@
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Text, View } from "@/components/Themed";
+import { CONTAINER_PADDING } from "@/constants/Container";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 export default function ForgotPasswordScreen() {
@@ -32,6 +33,7 @@ export default function ForgotPasswordScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    padding: CONTAINER_PADDING,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -46,5 +48,6 @@ const styles = StyleSheet.create({
   buttons: {
     gap: 20,
     marginBottom: 100,
+    width: '100%'
   },
 });

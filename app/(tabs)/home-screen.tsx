@@ -1,6 +1,7 @@
 import { CategorySection } from "@/components/home-components/CategorySection";
 import { Header } from "@/components/home-components/Header";
 import { HeroSection } from "@/components/home-components/HeroSection";
+import { ProductsSection } from "@/components/home-components/ProductsSection";
 import { View } from "@/components/Themed";
 import { StyleSheet } from "react-native";
 
@@ -10,6 +11,7 @@ export default function () {
       <Header />
       <HeroSection />
       <CategorySection/>
+      <ProductsSection/>
     </View>
   );
 }
