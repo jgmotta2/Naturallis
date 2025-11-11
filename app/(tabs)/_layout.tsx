@@ -23,49 +23,63 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         tabBarShowLabel: false,
-        tabBarStyle: {paddingTop: 15}
+        tabBarStyle: { paddingTop: 15 },
       }}
     >
       <Tabs.Screen
         name="home-screen"
         options={{
-          header: () => <></>, 
-          tabBarIcon: ({focused}) => (
-            <Ionicons name="home-outline" color={focused? '#41744E' : '#ccc'} size={30} />
+          header: () => <></>,
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="home-outline"
+              color={focused ? "#41744E" : "#ccc"}
+              size={30}
+            />
           ),
         }}
-
       />
 
       <Tabs.Screen
         name="index"
         options={{
-           header: () => <></>, 
-           tabBarIcon: ({focused}) => (
-            <Ionicons name="heart-outline" color={focused? '#41744E' : '#ccc'} size={30} />
+          header: () => <></>,
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="heart-outline"
+              color={focused ? "#41744E" : "#ccc"}
+              size={30}
+            />
           ),
-           tabBarStyle: { display: "none",}
+          tabBarStyle: { display: "none" },
         }}
-
       />
 
       <Tabs.Screen
         name="login-screen"
         options={{
           header: () => <RouteHeader />,
-          tabBarIcon: ({focused}) => (
-            <Ionicons name="cart-outline" color={focused? '#41744E' : '#ccc'} size={30} />
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="cart-outline"
+              color={focused ? "#41744E" : "#ccc"}
+              size={30}
+            />
           ),
           tabBarStyle: { display: "none" },
         }}
       />
-      
+
       <Tabs.Screen
         name="register-screen"
         options={{
           header: () => <RouteHeader>Cadastrar conta</RouteHeader>,
-          tabBarIcon: ({focused}) => (
-            <Ionicons name="person-outline" color={focused? '#41744E' : '#ccc'} size={30} />
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="person-outline"
+              color={focused ? "#41744E" : "#ccc"}
+              size={30}
+            />
           ),
           tabBarStyle: { display: "none" },
         }}
@@ -75,14 +89,24 @@ export default function TabLayout() {
         name="forgot-password-screen"
         options={{
           header: () => <RouteHeader />,
-          tabBarIcon: ({focused}) => (
-            <Ionicons name="menu-outline" color={focused? '#41744E' : '#ccc'} size={30} />
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="menu-outline"
+              color={focused ? "#41744E" : "#ccc"}
+              size={30}
+            />
           ),
           tabBarStyle: { display: "none" },
         }}
       />
 
-      
+      <Tabs.Screen
+        name="product-details-screen"
+        options={{
+          header: () => <RouteHeader />,
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }

@@ -1,4 +1,5 @@
-import { useNavigation } from "@react-navigation/native";
+import { formatCurrency } from "@/helpers/FormatCurrency";
+import { router } from "expo-router";
 import {
   Image,
   StyleSheet,
@@ -16,12 +17,8 @@ type Props = {
 };
 
 export function ProductCard(props: Props) {
-  const navigation = useNavigation();
-
   function handleGoToDetailsScreen() {
-    //     navigation.navigate("ProductDetails", {
-    //       productId: props.id,
-    //     });
+    router.push(`/(tabs)/product-details-screen?id=${props.id}`);
   }
 
   return (
@@ -35,12 +32,7 @@ export function ProductCard(props: Props) {
         />
         <Text style={styles.category}>{props.category}</Text>
         <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.price}>
-          {Intl.NumberFormat("pt-br", {
-            currency: "BRL",
-            style: "currency",
-          }).format(props.price)}
-        </Text>
+        <Text style={styles.price}>{formatCurrency(props.price)}</Text>
       </View>
     </TouchableHighlight>
   );
