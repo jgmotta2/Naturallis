@@ -104,6 +104,14 @@ export default function TabLayout() {
         name="forgot-password-screen"
         options={{
           header: () => <RouteHeader />,
+          href: null,
+        }}
+      />
+
+      <Tabs.Screen
+        name="all-categories-screen"
+        options={{
+          header: () => <RouteHeader>Todas as categorias</RouteHeader>,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="menu-outline"
@@ -111,7 +119,6 @@ export default function TabLayout() {
               size={30}
             />
           ),
-          tabBarStyle: { display: "none" },
         }}
       />
 

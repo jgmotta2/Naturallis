@@ -8,6 +8,7 @@ type Props = {
   children: ReactNode;
   onPress?: any;
   isSecondary?: boolean;
+  color?: string;
 };
 
 export function Button(props: Props) {
