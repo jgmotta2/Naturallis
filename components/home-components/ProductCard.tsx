@@ -1,12 +1,6 @@
 import { formatCurrency } from "@/helpers/FormatCurrency";
 import { router } from "expo-router";
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 type Props = {
   price: number;
@@ -22,7 +16,7 @@ export function ProductCard(props: Props) {
   }
 
   return (
-    <TouchableHighlight onPress={handleGoToDetailsScreen}>
+    <TouchableOpacity onPress={handleGoToDetailsScreen}>
       <View style={styles.container}>
         <Image
           style={styles.image}
@@ -34,7 +28,7 @@ export function ProductCard(props: Props) {
         <Text style={styles.title}>{props.title}</Text>
         <Text style={styles.price}>{formatCurrency(props.price)}</Text>
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 }
 

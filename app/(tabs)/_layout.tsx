@@ -67,6 +67,15 @@ export default function TabLayout() {
         name="login-screen"
         options={{
           header: () => <RouteHeader />,
+          href: null,
+          tabBarStyle: { display: "none" },
+        }}
+      />
+
+      <Tabs.Screen
+        name="shopping-cart-screen"
+        options={{
+          header: () => <RouteHeader>Carrinho de compras</RouteHeader>,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="cart-outline"
@@ -74,7 +83,6 @@ export default function TabLayout() {
               size={30}
             />
           ),
-          tabBarStyle: { display: "none" },
         }}
       />
 

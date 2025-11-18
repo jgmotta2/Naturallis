@@ -7,11 +7,35 @@ type Props = {
   href?: string;
   children: ReactNode;
   onPress?: any;
-  isSecondary?: boolean;
+  variant?: "primary" | "secondary" | "tertiary";
   color?: string;
 };
 
-export function Button(props: Props) {
+export function Button({ variant = "primary", ...props }: Props) {
+  function getButtonVariant() {
+    if (variant === "primary") {
+      return {
+        backgroundColor: "#41744E",
+        textColor: "white",
+        isBold: true,
+      };
+    }
+    if (variant === "secondary") {
+      return {
+        backgroundColor: "#ffffff",
+        borderColor: "#41744E",
+        borderWidth: 2,
+        textColor: "#41744E",
+      };
+    }
+    if (variant === "tertiary") {
+      return {
+        backgroundColor: "#c7fdccff",
+        textColor: "#41744E",
+      };
+    }
+  }
+
   function onPress() {
     if (props.href) {
       router.push(props.href as any);
@@ -23,13 +47,17 @@ export function Button(props: Props) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={props.isSecondary ? styles.secondaryButton : styles.button}
+      style={{
+        ...styles.button,
+        backgroundColor: getButtonVariant()?.backgroundColor,
+        borderColor: getButtonVariant()?.borderColor,
+        borderWidth: getButtonVariant()?.borderWidth,
+      }}
     >
       <Text
-        lightColor={props.isSecondary ? "#41744E" : "white"}
-        darkColor={props.isSecondary ? "#41744E" : "white"}
+        lightColor={getButtonVariant()?.textColor}
         size="medium"
-        isBold
+        isBold={getButtonVariant()?.isBold}
       >
         {props.children}
       </Text>
@@ -39,21 +67,10 @@ export function Button(props: Props) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#41744E",
     height: 60,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 45,
     width: "100%",
-  },
-
-  secondaryButton: {
-    backgroundColor: "#ffffff",
-    height: 60,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 45,
-    borderColor: "#41744E",
-    borderWidth: 2,
   },
 });

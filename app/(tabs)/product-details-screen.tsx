@@ -25,7 +25,7 @@ export default function ProductDetailsScreen() {
       </Text>
       <Text>{product.desciption}</Text>
       <Button>Comprar agora</Button>
-      <Button isSecondary>Adicionar ao carrinho</Button>
+      <Button variant="secondary">Adicionar ao carrinho</Button>
     </View>
   );
 }

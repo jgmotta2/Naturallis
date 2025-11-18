@@ -24,7 +24,7 @@ export default function HomeScreen() {
         </Text>
         <View style={styles.buttons}>
           <Button href="/(tabs)/login-screen">Fazer login</Button>
-          <Button href="/(tabs)/register-screen" isSecondary>
+          <Button href="/(tabs)/register-screen" variant="secondary">
             Criar conta
           </Button>
         </View>

@@ -1,5 +1,5 @@
 import { CONTAINER_PADDING } from "@/constants/Container";
-import { FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, View } from "../Themed";
 import { ProductCard } from "./ProductCard";
@@ -13,21 +13,18 @@ export function ProductsSection() {
           <Text style={styles.text} size="big" isBold>
             Produtos
           </Text>
-          <FlatList
-            numColumns={2}
-            data={ProductsMock(10)}
-            renderItem={({ item }) => (
+          <View style={styles.productList}>
+            {ProductsMock(10).map((item) => (
               <ProductCard
+                key={item.id}
                 title={item.title}
                 price={item.price}
                 category={item.category}
                 image={item.image}
                 id={item.id}
               />
-            )}
-            keyExtractor={(item) => item.id}
-            showsVerticalScrollIndicator={false}
-          />
+            ))}
+          </View>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -52,6 +49,7 @@ const styles = StyleSheet.create({
   },
   productList: {
     flex: 1,
-    backgroundColor: "#9edf88",
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
 });

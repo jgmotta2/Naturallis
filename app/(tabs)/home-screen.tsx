@@ -3,15 +3,17 @@ import { Header } from "@/components/home-components/Header";
 import { HeroSection } from "@/components/home-components/HeroSection";
 import { ProductsSection } from "@/components/home-components/ProductsSection";
 import { View } from "@/components/Themed";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 export default function () {
   return (
     <View style={styles.container}>
       <Header />
-      <HeroSection />
-      <CategorySection/>
-      <ProductsSection/>
+      <ScrollView>
+        <HeroSection />
+        <CategorySection />
+        <ProductsSection />
+      </ScrollView>
     </View>
   );
 }
@@ -19,7 +21,6 @@ export default function () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
   },
 
   nutsImage: {

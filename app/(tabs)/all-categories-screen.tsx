@@ -17,21 +17,31 @@ export default function () {
         </View>
       </View>
       <View style={styles.buttons}>
-        <Button href="/(tabs)/home-screen">Alimentos naturais</Button>
-        <Button href="/(tabs)/home-screen">Chás e infusões</Button>
-        <Button href="/(tabs)/home-screen">Produtos Agrícolas</Button>
-        <Button href="/(tabs)/home-screen">Suplementos Naturais</Button>
-        <Button href="/(tabs)/home-screen">
+        <Button variant="tertiary" href="/(tabs)/home-screen">
+          Alimentos naturais
+        </Button>
+        <Button variant="tertiary" href="/(tabs)/home-screen">
+          Chás e infusões
+        </Button>
+        <Button variant="tertiary" href="/(tabs)/home-screen">
+          Produtos Agrícolas
+        </Button>
+        <Button variant="tertiary" href="/(tabs)/home-screen">
+          Suplementos Naturais
+        </Button>
+        <Button variant="tertiary" href="/(tabs)/home-screen">
           Alimentos funcionais e sem glúten
         </Button>
-        <Button href="/(tabs)/home-screen">Bem-estar e estilo de vida</Button>
-        <Button href="/(tabs)/home-screen">
+        <Button variant="tertiary" href="/(tabs)/home-screen">
+          Bem-estar e estilo de vida
+        </Button>
+        <Button variant="tertiary" href="/(tabs)/home-screen">
           Temperos e condimentos Naturais
         </Button>
-        <Button href="/(tabs)/home-screen">
+        <Button variant="tertiary" href="/(tabs)/home-screen">
           Grãos, sementes e oleaginosas
         </Button>
-        <Button href="/(tabs)/home-screen">
+        <Button variant="tertiary" href="/(tabs)/home-screen">
           Bebidas naturais e funcionais
         </Button>
       </View>
