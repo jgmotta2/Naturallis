@@ -5,7 +5,7 @@ import { View } from "@/components/Themed";
 import { CONTAINER_PADDING } from "@/constants/Container";
 import { StyleSheet } from "react-native";
 
-export default function () {
+export default function AllCategoriesScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>

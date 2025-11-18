@@ -73,6 +73,14 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
+        name="filters-screen"
+        options={{
+          header: () => <RouteHeader />,
+          href: null,
+        }}
+      />
+
+      <Tabs.Screen
         name="shopping-cart-screen"
         options={{
           header: () => <RouteHeader>Carrinho de compras</RouteHeader>,
