@@ -17,6 +17,11 @@ export default function ShoppingCartScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <Text size="big" isBold>
+          Carrinho de compras
+        </Text>
+      </View>
       <FlatList
         data={cartItemsMock}
         renderItem={({ item }) => <CartItemRenderer item={item} />}
@@ -55,6 +60,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.light.background,
     paddingTop: 30,
+  },
+
+  header: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
   },
 
   footerContainer: {

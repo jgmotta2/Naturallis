@@ -24,8 +24,10 @@ export default function ProductDetailsScreen() {
         {product?.hasStock ? "Estoque disponível" : "Produto não disponível"}
       </Text>
       <Text>{product.desciption}</Text>
-      <Button>Comprar agora</Button>
-      <Button variant="secondary">Adicionar ao carrinho</Button>
+      <View style={styles.buttons}>
+        <Button>Comprar agora</Button>
+        <Button variant="secondary">Adicionar ao carrinho</Button>
+      </View>
     </View>
   );
 }
@@ -40,5 +42,10 @@ const styles = StyleSheet.create({
   image: {
     width: 370,
     height: 302,
+  },
+
+  buttons: {
+    marginTop: 25,
+    gap: 10,
   },
 });

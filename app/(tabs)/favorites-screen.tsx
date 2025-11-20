@@ -2,13 +2,18 @@ import { FilterButton } from "@/components/FilterButton";
 import { ProductCard } from "@/components/home-components/ProductCard";
 import { ProductsMock } from "@/components/home-components/ProductsMock";
 import { Input } from "@/components/Input";
-import { View } from "@/components/Themed";
+import { Text, View } from "@/components/Themed";
 import { CONTAINER_PADDING } from "@/constants/Container";
 import { FlatList, StyleSheet } from "react-native";
 
 export default function FavoritesScreen() {
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <Text size="big" isBold>
+          Produtos Favoritos
+        </Text>
+      </View>
       <View
         style={{
           flexDirection: "row",
@@ -25,7 +30,7 @@ export default function FavoritesScreen() {
           <FilterButton />
         </View>
       </View>
-      <View style={styles.list}>
+      <View>
         <FlatList
           numColumns={2}
           data={ProductsMock(10)}
@@ -52,5 +57,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  list: {},
+  header: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 30,
+  },
 });

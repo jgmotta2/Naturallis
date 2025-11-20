@@ -23,8 +23,8 @@ export default function HomeScreen() {
           É natural.
         </Text>
         <View style={styles.buttons}>
-          <Button href="/(tabs)/login-screen">Fazer login</Button>
-          <Button href="/(tabs)/register-screen" variant="secondary">
+          <Button href="/login-screen">Fazer login</Button>
+          <Button href="/register-screen" variant="secondary">
             Criar conta
           </Button>
         </View>

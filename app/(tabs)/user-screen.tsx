@@ -41,7 +41,7 @@ export default function UserScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30,
+    paddingTop: 50,
   },
 
   imageAndName: {

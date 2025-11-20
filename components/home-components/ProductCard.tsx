@@ -12,7 +12,7 @@ type Props = {
 
 export function ProductCard(props: Props) {
   function handleGoToDetailsScreen() {
-    router.push(`/(tabs)/product-details-screen?id=${props.id}`);
+    router.push(`/product-details-screen?id=${props.id}`);
   }
 
   return (

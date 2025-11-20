@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 export function FilterButton() {
   return (
     <TouchableOpacity
-      onPress={() => router.push("/(tabs)/filters-screen")}
+      onPress={() => router.push("/filters-screen")}
       style={styles.button}
     >
       <Ionicons name="filter-outline" size={24} color="black" />

@@ -18,7 +18,7 @@ export function RouteHeader(props: Props) {
           style={{ marginBottom: -3 }}
         />
       </TouchableOpacity>
-      <Text size="big" isBold style={{ paddingLeft: 60 }}>
+      <Text size="big" isBold style={{ paddingLeft: 95 }}>
         {props.children}
       </Text>
     </View>
@@ -30,6 +30,5 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingLeft: 24,
     flexDirection: "row",
-    gap: 24,
   },
 });

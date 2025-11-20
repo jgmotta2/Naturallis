@@ -1,3 +1,5 @@
+import { RouteHeader } from "@/components/RouteHeader"; // Importe o componente
+import { useColorScheme } from "@/components/useColorScheme";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   DarkTheme,
@@ -10,19 +12,12 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
 
-import { useColorScheme } from "@/components/useColorScheme";
-
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
+export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: "(tabs)",
 };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -31,7 +26,6 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -56,6 +50,38 @@ function RootLayoutNav() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+
+        <Stack.Screen
+          name="filters-screen"
+          options={{
+            header: () => <RouteHeader>Todos os filtros</RouteHeader>,
+            headerShown: true,
+          }}
+        />
+
+        <Stack.Screen
+          name="register-screen"
+          options={{
+            header: () => <RouteHeader>Cadastrar conta</RouteHeader>,
+            headerShown: true,
+          }}
+        />
+
+        <Stack.Screen
+          name="login-screen"
+          options={{
+            header: () => <RouteHeader />,
+            headerShown: true,
+          }}
+        />
+
+        <Stack.Screen
+          name="product-details-screen"
+          options={{
+            header: () => <RouteHeader>Detalhes do produto</RouteHeader>,
+            headerShown: true,
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );

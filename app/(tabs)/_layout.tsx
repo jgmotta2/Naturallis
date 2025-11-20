@@ -1,19 +1,9 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import React from "react";
 
-import { RouteHeader } from "@/components/RouteHeader";
 import { useColorScheme } from "@/components/useColorScheme";
 import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -38,7 +28,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="home-screen"
         options={{
-          header: () => <></>,
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="home-outline"
@@ -52,7 +42,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="favorites-screen"
         options={{
-          header: () => <RouteHeader>Produtos Favoritos</RouteHeader>,
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="heart-outline"
@@ -64,26 +54,9 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="login-screen"
-        options={{
-          header: () => <RouteHeader />,
-          href: null,
-          tabBarStyle: { display: "none" },
-        }}
-      />
-
-      <Tabs.Screen
-        name="filters-screen"
-        options={{
-          header: () => <RouteHeader>Todos os filtros</RouteHeader>,
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
         name="shopping-cart-screen"
         options={{
-          header: () => <RouteHeader>Carrinho de compras</RouteHeader>,
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="cart-outline"
@@ -97,7 +70,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="user-screen"
         options={{
-          header: () => <RouteHeader>Tela do usuário</RouteHeader>,
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="person-outline"
@@ -109,25 +82,9 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="register-screen"
-        options={{
-          header: () => <RouteHeader>Cadastrar conta</RouteHeader>,
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="forgot-password-screen"
-        options={{
-          header: () => <RouteHeader />,
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
         name="all-categories-screen"
         options={{
-          header: () => <RouteHeader>Todas as categorias</RouteHeader>,
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="menu-outline"
@@ -135,14 +92,6 @@ export default function TabLayout() {
               size={30}
             />
           ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="product-details-screen"
-        options={{
-          header: () => <RouteHeader />,
-          href: null,
         }}
       />
     </Tabs>

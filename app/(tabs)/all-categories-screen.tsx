@@ -1,13 +1,18 @@
 import { Button } from "@/components/Button";
 import { FilterButton } from "@/components/FilterButton";
 import { Input } from "@/components/Input";
-import { View } from "@/components/Themed";
+import { Text, View } from "@/components/Themed";
 import { CONTAINER_PADDING } from "@/constants/Container";
 import { StyleSheet } from "react-native";
 
 export default function AllCategoriesScreen() {
   return (
     <View style={styles.container}>
+      <View style={styles.textHeader}>
+        <Text size="big" isBold>
+          Todas as categorias
+        </Text>
+      </View>
       <View style={styles.header}>
         <View style={{ flex: 1 }}>
           <Input iconName="search" placeholder="Busque aqui" />
@@ -52,6 +57,12 @@ export default function AllCategoriesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+
+  textHeader: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 30,
   },
 
   header: {
