@@ -75,7 +75,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="filters-screen"
         options={{
-          header: () => <RouteHeader />,
+          header: () => <RouteHeader>Todos os filtros</RouteHeader>,
           href: null,
         }}
       />
