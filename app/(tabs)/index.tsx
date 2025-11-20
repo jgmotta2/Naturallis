@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
 
   buttons: {
-    marginTop: 70,
+    marginTop: 30,
     flexDirection: "column",
     gap: 10,
     paddingVertical: 30,
