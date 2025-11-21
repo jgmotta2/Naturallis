@@ -4,11 +4,14 @@ import { Text, View } from "@/components/Themed";
 import Colors from "@/constants/Colors";
 import { CONTAINER_PADDING } from "@/constants/Container";
 import { Link } from "expo-router";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 
 export default function LoginScreen() {
   return (
     <View style={styles.container}>
+      <View style={styles.branchIcon}>
+        <Image source={require("@/assets/images/GreenBranch-icon.png")}></Image>
+      </View>
       <Input placeholder="E-mail" />
       <Input placeholder="Senha" />
       <Button href="/(tabs)/home-screen">Entrar</Button>
@@ -31,6 +34,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
+    paddingBottom: 150,
+  },
+
+  branchIcon: {
+    backgroundColor: "transparent",
+    marginLeft: 30,
   },
 
   registerContainer: {

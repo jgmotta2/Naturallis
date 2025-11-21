@@ -1,9 +1,16 @@
 import { Text, View } from "@/components/Themed";
 import { CONTAINER_PADDING } from "@/constants/Container";
 import { Feather } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-const menuItems = [
+type MenuItem = {
+  id: string;
+  title: string;
+  icon: keyof typeof Feather.glyphMap;
+};
+
+const menuItems: MenuItem[] = [
   { id: "1", title: "Meus dados", icon: "user" },
   { id: "2", title: "Segurança", icon: "lock" },
   { id: "3", title: "Meus planos", icon: "file-text" },
@@ -12,16 +19,25 @@ const menuItems = [
   { id: "6", title: "Informações do aplicativo", icon: "info" },
   { id: "7", title: "Perguntas frequentes", icon: "help-circle" },
   { id: "8", title: "Sair", icon: "log-out" },
-] as const;
-
-const renderItem = ({ item }: { item: (typeof menuItems)[number] }) => (
-  <TouchableOpacity style={styles.menuItem}>
-    <Feather name={item.icon} size={24} color="#333" />
-    <Text style={styles.menuText}>{item.title}</Text>
-  </TouchableOpacity>
-);
+];
 
 export default function UserScreen() {
+  function handleItemPress(item: MenuItem) {
+    if (item.id === "8") {
+      router.replace("/");
+    }
+  }
+
+  const renderItem = ({ item }: { item: MenuItem }) => (
+    <TouchableOpacity
+      style={styles.menuItem}
+      onPress={() => handleItemPress(item)}
+    >
+      <Feather name={item.icon} size={24} color="#333" />
+      <Text style={styles.menuText}>{item.title}</Text>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.imageAndName}>

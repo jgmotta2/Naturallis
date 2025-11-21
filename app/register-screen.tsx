@@ -2,11 +2,14 @@ import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { View } from "@/components/Themed";
 import { CONTAINER_PADDING } from "@/constants/Container";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 
 export default function RegisterScreen() {
   return (
     <View style={styles.container}>
+      <View style={styles.branchIcon}>
+        <Image source={require("@/assets/images/GreenBranch-icon.png")}></Image>
+      </View>
       <Input placeholder="E-mail"></Input>
       <Input placeholder="Nome de usuário"></Input>
       <Input placeholder="Data de nascimento"></Input>
@@ -27,10 +30,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
+    paddingBottom: 100,
   },
 
   button: {
-    width: '100%',
-    marginTop: 51
-  }
+    width: "100%",
+    marginTop: 50,
+  },
+
+  branchIcon: {
+    backgroundColor: "transparent",
+    marginLeft: 30,
+  },
 });
