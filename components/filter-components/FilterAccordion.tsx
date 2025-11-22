@@ -12,8 +12,8 @@ export type FilterOption = {
 type Props = {
   label: string;
   options?: FilterOption[];
-  selectedValue?: string | null; // Recebe o valor do pai
-  onSelect?: (value: string | null) => void; // Avisa o pai da mudança
+  selectedValue?: string | null;
+  onSelect?: (value: string | null) => void;
 };
 
 export function FilterAccordion({
@@ -24,7 +24,6 @@ export function FilterAccordion({
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Encontra o label da opção selecionada para exibir no cabeçalho
   const selectedOptionLabel = options.find(
     (opt) => opt.value === selectedValue
   )?.label;
@@ -33,10 +32,10 @@ export function FilterAccordion({
     if (!onSelect) return;
 
     if (selectedValue === value) {
-      onSelect(null); // Desmarca se clicar no mesmo
+      onSelect(null);
     } else {
-      onSelect(value); // Seleciona o novo
-      setIsOpen(false); // Fecha o acordeão
+      onSelect(value);
+      setIsOpen(false);
     }
   }
 
@@ -49,7 +48,6 @@ export function FilterAccordion({
         ]}
         onPress={() => setIsOpen(!isOpen)}
       >
-        {/* Exibe label selecionado OU label original */}
         <Text
           style={[
             styles.accordionTitle,

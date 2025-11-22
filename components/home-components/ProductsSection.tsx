@@ -1,51 +1,69 @@
 import { CONTAINER_PADDING } from "@/constants/Container";
-import { SafeAreaView, StyleSheet } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Text, View } from "../Themed";
+import { Product, productService } from "@/services/products";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { Text } from "../Themed";
 import { ProductCard } from "./ProductCard";
-import { ProductsMock } from "./ProductsMock";
 
 export function ProductsSection() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  async function fetchProducts() {
+    try {
+      const data = await productService.getAll();
+      setProducts(data);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#41744E" />
+      </View>
+    );
+  }
+
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.container}>
-          <Text style={styles.text} size="big" isBold>
-            Produtos
-          </Text>
-          <View style={styles.productList}>
-            {ProductsMock(10).map((item) => (
-              <ProductCard
-                key={item.id}
-                title={item.title}
-                price={item.price}
-                category={item.category}
-                image={item.image}
-                id={item.id}
-              />
-            ))}
-          </View>
-        </View>
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <View style={styles.container}>
+      <Text style={styles.text} size="big" isBold>
+        Produtos
+      </Text>
+      <View style={styles.productList}>
+        {products.map((item) => (
+          <ProductCard
+            key={item.id}
+            id={item.id}
+            title={item.name}
+            price={item.price}
+            category={item.category || "Geral"}
+            image={item.image || "https://placehold.co/150@3x.png"}
+          />
+        ))}
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   text: {
     paddingHorizontal: CONTAINER_PADDING,
-    bottom: 10,
+    marginBottom: 10,
   },
-
   container: {
     flex: 1,
     paddingVertical: 10,
   },
   loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
+    paddingVertical: 40,
     alignItems: "center",
-    backgroundColor: "#F7FAFC",
   },
   productList: {
     flex: 1,

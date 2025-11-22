@@ -6,12 +6,13 @@ import { Text } from "./Themed";
 type Props = {
   href?: string;
   children: ReactNode;
-  onPress?: any;
+  onPress?: () => void;
   variant?: "primary" | "secondary" | "tertiary";
   color?: string;
+  disabled?: boolean;
 };
 
-export function Button({ variant = "primary", ...props }: Props) {
+export function Button({ variant = "primary", disabled, ...props }: Props) {
   function getButtonVariant() {
     if (variant === "primary") {
       return {
@@ -37,6 +38,8 @@ export function Button({ variant = "primary", ...props }: Props) {
   }
 
   function onPress() {
+    if (disabled) return;
+
     if (props.href) {
       router.push(props.href as any);
       return;
@@ -44,20 +47,25 @@ export function Button({ variant = "primary", ...props }: Props) {
     props?.onPress?.();
   }
 
+  const stylesVariant = getButtonVariant();
+
   return (
     <TouchableOpacity
       onPress={onPress}
+      disabled={disabled}
+      activeOpacity={0.7}
       style={{
         ...styles.button,
-        backgroundColor: getButtonVariant()?.backgroundColor,
-        borderColor: getButtonVariant()?.borderColor,
-        borderWidth: getButtonVariant()?.borderWidth,
+        backgroundColor: stylesVariant?.backgroundColor,
+        borderColor: stylesVariant?.borderColor,
+        borderWidth: stylesVariant?.borderWidth,
+        opacity: disabled ? 0.5 : 1,
       }}
     >
       <Text
-        lightColor={getButtonVariant()?.textColor}
+        lightColor={stylesVariant?.textColor}
         size="medium"
-        isBold={getButtonVariant()?.isBold}
+        isBold={stylesVariant?.isBold}
       >
         {props.children}
       </Text>
