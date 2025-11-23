@@ -22,15 +22,19 @@ interface AuthResponse {
 }
 
 const AUTH_KEY = "user_token";
+const USER_NAME_KEY = "user_name";
 
 export const authService = {
   async login(credentials: SigninDTO): Promise<void> {
     const response = await api.post<AuthResponse>("/auth/signin", credentials);
 
-    const { token } = response.data;
+    const { token, user } = response.data;
 
     if (token) {
       await SecureStore.setItemAsync(AUTH_KEY, token);
+      if (user && user.name) {
+        await SecureStore.setItemAsync(USER_NAME_KEY, user.name);
+      }
     } else {
       throw new Error("Token não encontrado na resposta");
     }
@@ -42,9 +46,14 @@ export const authService = {
 
   async logout(): Promise<void> {
     await SecureStore.deleteItemAsync(AUTH_KEY);
+    await SecureStore.deleteItemAsync(USER_NAME_KEY);
   },
 
   async getToken(): Promise<string | null> {
     return await SecureStore.getItemAsync(AUTH_KEY);
+  },
+
+  async getUserName(): Promise<string | null> {
+    return await SecureStore.getItemAsync(USER_NAME_KEY);
   },
 };

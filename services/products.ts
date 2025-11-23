@@ -5,6 +5,8 @@ export interface Product {
   description: string;
   price: number;
   currency: string;
+  brand: string;
+  model: string;
   stock?: number;
   imageUrl?: string;
   convertedPrice?: number;

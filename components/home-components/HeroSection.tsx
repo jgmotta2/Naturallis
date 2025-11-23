@@ -2,7 +2,11 @@ import { Image, StyleSheet } from "react-native";
 import { HeroButton } from "../HeroButton";
 import { View } from "../Themed";
 
-export function HeroSection() {
+type Props = {
+  currency: string;
+};
+
+export function HeroSection({ currency }: Props) {
   return (
     <View style={styles.container}>
       <Image
@@ -10,7 +14,9 @@ export function HeroSection() {
         style={styles.nutsImage}
       />
       <View style={styles.button}>
-        <HeroButton href="/(tabs)/register-screen" />
+        <HeroButton
+          href={`/product-details-screen?id=1&currency=${currency}`}
+        />
       </View>
     </View>
   );

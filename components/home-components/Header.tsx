@@ -8,15 +8,24 @@ import { Text, View } from "../Themed";
 type Props = {
   currentCurrency: string;
   onToggleCurrency: () => void;
+  userName: string;
+  searchText: string;
+  onSearchChange: (text: string) => void;
 };
 
-export function Header({ currentCurrency, onToggleCurrency }: Props) {
+export function Header({
+  currentCurrency,
+  onToggleCurrency,
+  userName,
+  searchText,
+  onSearchChange,
+}: Props) {
   const isUSD = currentCurrency === "USD";
 
   return (
     <View style={styles.container}>
       <View style={styles.greetings}>
-        <Text>Bem-vindo Pedro!</Text>
+        <Text>Bem-vindo {userName || "Visitante"}!</Text>
         <View style={styles.switch}>
           <Text>{currentCurrency}</Text>
           <Switch
@@ -36,7 +45,12 @@ export function Header({ currentCurrency, onToggleCurrency }: Props) {
         }}
       >
         <View style={{ flex: 1 }}>
-          <Input iconName="search" placeholder="Busque aqui" />
+          <Input
+            iconName="search"
+            placeholder="Busque aqui"
+            value={searchText}
+            onChangeText={onSearchChange}
+          />
         </View>
 
         <View>

@@ -1,6 +1,6 @@
 import { CONTAINER_PADDING } from "@/constants/Container";
-import { Product, productService } from "@/services/products";
-import { useEffect, useState } from "react";
+import { filterProducts, getCategoryLabel } from "@/helpers/ProductFilter";
+import { useProducts } from "@/hooks/useProducts";
 import {
   ActivityIndicator,
   SafeAreaView,
@@ -13,27 +13,22 @@ import { ProductCard } from "./ProductCard";
 
 type Props = {
   currency: string;
+  selectedCategory: string | null;
+  searchText: string;
 };
 
-export function ProductsSection({ currency }: Props) {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export function ProductsSection({
+  currency,
+  selectedCategory,
+  searchText,
+}: Props) {
+  const { products, isLoading } = useProducts(currency);
 
-  useEffect(() => {
-    fetchProducts();
-  }, [currency]);
-
-  async function fetchProducts() {
-    try {
-      setIsLoading(true);
-      const data = await productService.getAll(0, 10, currency);
-      setProducts(data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  const filteredProducts = filterProducts(
+    products,
+    selectedCategory,
+    searchText
+  );
 
   if (isLoading) {
     return (
@@ -50,29 +45,33 @@ export function ProductsSection({ currency }: Props) {
           <Text style={styles.text} size="big" isBold>
             Produtos
           </Text>
+
           <View style={styles.productList}>
-            {products.map((item) => (
-              <ProductCard
-                key={item.id}
-                id={item.id.toString()}
-                title={item.description}
-                price={
-                  item.convertedPrice && item.convertedPrice > 0
-                    ? item.convertedPrice
-                    : item.price
-                }
-                category={"Geral"}
-                image={item.imageUrl || "https://placehold.co/150.png"}
-                currency={currency}
-              />
-            ))}
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((item) => (
+                <ProductCard
+                  key={item.id}
+                  id={item.id.toString()}
+                  title={item.description}
+                  price={
+                    item.convertedPrice && item.convertedPrice > 0
+                      ? item.convertedPrice
+                      : item.price
+                  }
+                  category={getCategoryLabel(selectedCategory)}
+                  image={item.imageUrl || "https://placehold.co/150.png"}
+                  currency={currency}
+                />
+              ))
+            ) : (
+              <Text style={{ padding: 20 }}>Nenhum produto encontrado.</Text>
+            )}
           </View>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );
 }
-
 const styles = StyleSheet.create({
   text: { paddingHorizontal: CONTAINER_PADDING, bottom: 10 },
   container: { flex: 1, paddingVertical: 10 },

@@ -1,3 +1,4 @@
+import { CONTAINER_PADDING } from "@/constants/Container";
 import { formatCurrency } from "@/helpers/FormatCurrency";
 import { router } from "expo-router";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -13,16 +14,22 @@ type Props = {
 
 export function ProductCard(props: Props) {
   function handleGoToDetailsScreen() {
-    router.push(`/product-details-screen?id=${props.id}`);
+    router.push(
+      `/product-details-screen?id=${props.id}&currency=${props.currency}`
+    );
   }
 
   return (
     <TouchableOpacity onPress={handleGoToDetailsScreen}>
       <View style={styles.container}>
-        <Image style={styles.image} source={{ uri: props.image }} />
+        <Image
+          style={styles.image}
+          source={{
+            uri: props.image,
+          }}
+        />
         <Text style={styles.category}>{props.category}</Text>
         <Text style={styles.title}>{props.title}</Text>
-
         <Text style={styles.price}>
           {formatCurrency(props.price, props.currency)}
         </Text>
@@ -38,11 +45,12 @@ const styles = StyleSheet.create({
     margin: 12,
     padding: 16,
     gap: 12,
+    paddingLeft: CONTAINER_PADDING,
   },
   image: {
     width: 140,
     height: 140,
-    backgroundColor: "#F7FAFC",
+    backgroundColor: "transparent",
   },
   category: {
     fontSize: 12,
@@ -61,7 +69,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 18,
-    color: "#71bf60",
+    color: "#41744E",
     fontWeight: "700",
   },
 });
