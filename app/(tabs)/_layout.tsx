@@ -2,7 +2,6 @@ import { Tabs } from "expo-router";
 import React from "react";
 
 import { useColorScheme } from "@/components/useColorScheme";
-import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function TabLayout() {
@@ -11,9 +10,8 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         tabBarShowLabel: false,
-        tabBarStyle: { paddingTop: 15 },
+        tabBarStyle: { paddingTop: 15, backgroundColor: "white" },
       }}
     >
       <Tabs.Screen

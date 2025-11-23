@@ -8,6 +8,7 @@ type Props = {
   title: string;
   category: string;
   id: string;
+  currency: string;
 };
 
 export function ProductCard(props: Props) {
@@ -18,15 +19,13 @@ export function ProductCard(props: Props) {
   return (
     <TouchableOpacity onPress={handleGoToDetailsScreen}>
       <View style={styles.container}>
-        <Image
-          style={styles.image}
-          source={{
-            uri: props.image,
-          }}
-        />
+        <Image style={styles.image} source={{ uri: props.image }} />
         <Text style={styles.category}>{props.category}</Text>
         <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.price}>{formatCurrency(props.price)}</Text>
+
+        <Text style={styles.price}>
+          {formatCurrency(props.price, props.currency)}
+        </Text>
       </View>
     </TouchableOpacity>
   );

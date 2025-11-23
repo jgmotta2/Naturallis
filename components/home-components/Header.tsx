@@ -1,27 +1,29 @@
 import Colors from "@/constants/Colors";
 import { CONTAINER_PADDING } from "@/constants/Container";
-import { useState } from "react";
 import { StyleSheet, Switch } from "react-native";
 import { FilterButton } from "../FilterButton";
 import { Input } from "../Input";
 import { Text, View } from "../Themed";
 
-export function Header() {
-  const [switchState, setSwitchState] = useState(false);
+type Props = {
+  currentCurrency: string;
+  onToggleCurrency: () => void;
+};
+
+export function Header({ currentCurrency, onToggleCurrency }: Props) {
+  const isUSD = currentCurrency === "USD";
 
   return (
     <View style={styles.container}>
       <View style={styles.greetings}>
         <Text>Bem-vindo Pedro!</Text>
         <View style={styles.switch}>
-          <Text>{!switchState ? "BRL" : "USD"}</Text>
+          <Text>{currentCurrency}</Text>
           <Switch
             trackColor={{ false: "#767577", true: Colors.light.primaryColor }}
-            thumbColor={switchState ? Colors.light.primaryColor : "#f4f3f4"}
-            value={switchState}
-            onValueChange={() =>
-              setSwitchState((previousState) => !previousState)
-            }
+            thumbColor={isUSD ? Colors.light.primaryColor : "#f4f3f4"}
+            value={isUSD}
+            onValueChange={onToggleCurrency}
           />
         </View>
       </View>
@@ -33,7 +35,7 @@ export function Header() {
           gap: 12,
         }}
       >
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <Input iconName="search" placeholder="Busque aqui" />
         </View>
 
@@ -61,5 +63,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
   },
-
 });

@@ -11,17 +11,22 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text } from "../Themed";
 import { ProductCard } from "./ProductCard";
 
-export function ProductsSection() {
+type Props = {
+  currency: string;
+};
+
+export function ProductsSection({ currency }: Props) {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [currency]);
 
   async function fetchProducts() {
     try {
-      const data = await productService.getAll();
+      setIsLoading(true);
+      const data = await productService.getAll(0, 10, currency);
       setProducts(data);
     } catch (error) {
       console.log(error);
@@ -58,6 +63,7 @@ export function ProductsSection() {
                 }
                 category={"Geral"}
                 image={item.imageUrl || "https://placehold.co/150.png"}
+                currency={currency}
               />
             ))}
           </View>
