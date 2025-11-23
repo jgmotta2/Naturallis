@@ -1,41 +1,65 @@
-import { CartItem } from "@/components/shopping-cart-components/ShoppingCartMock";
 import { Text, View } from "@/components/Themed";
 import Colors from "@/constants/Colors";
 import { CONTAINER_PADDING } from "@/constants/Container";
+import { CartItem, useCart } from "@/context/CartContext";
 import { formatCurrency } from "@/helpers/FormatCurrency";
 import { Ionicons } from "@expo/vector-icons";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
-export function CartItemRenderer({ item }: { item: CartItem }) {
-  const primaryColor = Colors.light.primaryColor;
+type Props = {
+  item: CartItem;
+  currency: string;
+};
+
+export function CartItemRenderer({ item, currency }: Props) {
+  const { changeQuantity } = useCart();
+
+  const price =
+    item.convertedPrice && item.convertedPrice > 0
+      ? item.convertedPrice
+      : item.price;
 
   return (
     <View style={styles.itemContainer}>
-      <Image source={{ uri: item.image }} style={styles.itemImage} />
+      <Image
+        source={{ uri: item.imageUrl || "https://placehold.co/150.png" }}
+        style={styles.itemImage}
+      />
+
       <View style={styles.itemDetails}>
         <Text size="small" style={styles.itemCategory}>
-          {item.category}
+          {item.category || "Geral"}
         </Text>
         <Text size="medium" isBold>
-          {item.title}
+          {item.description}
         </Text>
         <Text size="big" isBold style={styles.itemPrice}>
-          {formatCurrency(item.price)}
+          {formatCurrency(price, currency)}
         </Text>
       </View>
+
       <View style={styles.quantityControl}>
-        <TouchableOpacity>
-          <Ionicons name="remove-circle-outline" size={24} color={primaryColor} />
+        <TouchableOpacity onPress={() => changeQuantity(item.id, -1)}>
+          <Ionicons
+            name="remove-circle-outline"
+            size={24}
+            color={Colors.light.primaryColor}
+          />
         </TouchableOpacity>
+
         <Text>{item.quantity}</Text>
-        <TouchableOpacity>
-          <Ionicons name="add-circle-outline" size={24} color={primaryColor} />
+
+        <TouchableOpacity onPress={() => changeQuantity(item.id, 1)}>
+          <Ionicons
+            name="add-circle-outline"
+            size={24}
+            color={Colors.light.primaryColor}
+          />
         </TouchableOpacity>
       </View>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: "row",
@@ -50,7 +74,7 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 8,
     marginRight: 15,
-    resizeMode: 'contain'
+    resizeMode: "contain",
   },
   itemDetails: {
     flex: 1,

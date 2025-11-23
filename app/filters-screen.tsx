@@ -1,5 +1,4 @@
 import { Button } from "@/components/Button";
-import { Input } from "@/components/Input";
 import { Text, View } from "@/components/Themed";
 import {
   FilterAccordion,
@@ -8,21 +7,20 @@ import {
 import { FilterToggle } from "@/components/filter-components/FilterToggle";
 import Colors from "@/constants/Colors";
 import { CONTAINER_PADDING } from "@/constants/Container";
-import { router } from "expo-router";
-import { useState } from "react";
+import { FilterSource, useFilter } from "@/context/FilterContext";
+import { router, useLocalSearchParams } from "expo-router";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 
 const CATEGORY_OPTIONS: FilterOption[] = [
-  { label: "Alimentos", value: "alimentos" },
-  { label: "Bebidas", value: "bebidas" },
-  { label: "Suplementos", value: "suplementos" },
-  { label: "Cosméticos", value: "cosmeticos" },
+  { label: "Alimentos", value: "1" },
+  { label: "Bem-estar", value: "2" },
 ];
 
 const BRAND_OPTIONS: FilterOption[] = [
   { label: "Naturallis", value: "naturallis" },
   { label: "Verde Vida", value: "verdevida" },
   { label: "BioOrganic", value: "bioorganic" },
+  { label: "Apiário", value: "apiário" },
 ];
 
 const PRICE_OPTIONS: FilterOption[] = [
@@ -32,31 +30,31 @@ const PRICE_OPTIONS: FilterOption[] = [
 ];
 
 export default function FiltersScreen() {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
-  const [selectedPrice, setSelectedPrice] = useState<string | null>(null);
+  const params = useLocalSearchParams<{ source: FilterSource }>();
+  const source = params.source || "home";
 
-  const [isInstallmentFree, setIsInstallmentFree] = useState(false);
-  const [isFreeShipping, setIsFreeShipping] = useState(false);
+  const { homeFilters, favoritesFilters, updateFilter, resetFilters } =
+    useFilter();
 
-  function handleClearFilters() {
-    setSelectedCategory(null);
-    setSelectedBrand(null);
-    setSelectedPrice(null);
-    setIsInstallmentFree(false);
-    setIsFreeShipping(false);
-  }
+  const currentFilters = source === "home" ? homeFilters : favoritesFilters;
+
+  const setCategory = (val: string | null) =>
+    updateFilter(source, "categoryId", val);
+  const setBrand = (val: string | null) => updateFilter(source, "brand", val);
+  const setPriceRange = (val: string | null) =>
+    updateFilter(source, "priceRange", val);
+
+  const setFreeShipping = (val: boolean) =>
+    updateFilter(source, "onlyFreeShipping", val);
+  const setInterestFree = (val: boolean) =>
+    updateFilter(source, "onlyInterestFree", val);
 
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.searchRow}>
-          <Input iconName="search" placeholder="Busque aqui" />
-        </View>
-
         <TouchableOpacity
           style={styles.clearLinkContainer}
-          onPress={handleClearFilters}
+          onPress={() => resetFilters(source)}
         >
           <Text style={styles.clearLinkText}>Limpar filtros</Text>
         </TouchableOpacity>
@@ -65,35 +63,33 @@ export default function FiltersScreen() {
           <FilterAccordion
             label="Categorias"
             options={CATEGORY_OPTIONS}
-            selectedValue={selectedCategory}
-            onSelect={setSelectedCategory}
+            selectedValue={currentFilters.categoryId}
+            onSelect={setCategory}
           />
           <FilterAccordion
             label="Marcas"
             options={BRAND_OPTIONS}
-            selectedValue={selectedBrand}
-            onSelect={setSelectedBrand}
+            selectedValue={currentFilters.brand}
+            onSelect={setBrand}
           />
           <FilterAccordion
             label="Preços"
             options={PRICE_OPTIONS}
-            selectedValue={selectedPrice}
-            onSelect={setSelectedPrice}
+            selectedValue={currentFilters.priceRange}
+            onSelect={setPriceRange}
           />
-          <FilterAccordion label="Ofertas e descontos" />
-          <FilterAccordion label="Mais comprados" />
         </View>
 
         <View style={styles.togglesContainer}>
           <FilterToggle
             label="Parcelamento sem juros"
-            value={isInstallmentFree}
-            onValueChange={setIsInstallmentFree}
+            value={currentFilters.onlyInterestFree}
+            onValueChange={setInterestFree}
           />
           <FilterToggle
             label="Frete grátis"
-            value={isFreeShipping}
-            onValueChange={setIsFreeShipping}
+            value={currentFilters.onlyFreeShipping}
+            onValueChange={setFreeShipping}
           />
         </View>
       </ScrollView>
@@ -110,14 +106,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.light.background,
   },
-  searchRow: {
-    paddingHorizontal: CONTAINER_PADDING,
-    marginTop: 20,
-  },
   clearLinkContainer: {
     alignItems: "flex-end",
     paddingHorizontal: CONTAINER_PADDING,
-    marginTop: 10,
+    marginTop: 25,
     marginBottom: 10,
   },
   clearLinkText: {
@@ -137,8 +129,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     padding: CONTAINER_PADDING,
-    borderTopWidth: 1,
-    borderTopColor: "#f0f0f0",
     backgroundColor: Colors.light.background,
+    paddingBottom: 50,
   },
 });

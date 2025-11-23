@@ -1,6 +1,9 @@
 import { RouteHeader } from "@/components/RouteHeader"; // Importe o componente
 import { useColorScheme } from "@/components/useColorScheme";
+import { CartProvider } from "@/context/CartContext";
+import { CurrencyProvider } from "@/context/CurrencyContext";
 import { FavoritesProvider } from "@/context/FavoritesContext";
+import { FilterProvider } from "@/context/FilterContext";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   DarkTheme,
@@ -48,44 +51,54 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <FavoritesProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    <FilterProvider>
+      <CurrencyProvider>
+        <FavoritesProvider>
+          <CartProvider>
+            <ThemeProvider
+              value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+            >
+              <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
-          <Stack.Screen
-            name="filters-screen"
-            options={{
-              header: () => <RouteHeader>Todos os filtros</RouteHeader>,
-              headerShown: true,
-            }}
-          />
+                <Stack.Screen
+                  name="filters-screen"
+                  options={{
+                    header: () => <RouteHeader>Todos os filtros</RouteHeader>,
+                    headerShown: true,
+                  }}
+                />
 
-          <Stack.Screen
-            name="register-screen"
-            options={{
-              header: () => <RouteHeader>Cadastrar conta</RouteHeader>,
-              headerShown: true,
-            }}
-          />
+                <Stack.Screen
+                  name="register-screen"
+                  options={{
+                    header: () => <RouteHeader>Cadastrar conta</RouteHeader>,
+                    headerShown: true,
+                  }}
+                />
 
-          <Stack.Screen
-            name="login-screen"
-            options={{
-              header: () => <RouteHeader />,
-              headerShown: true,
-            }}
-          />
+                <Stack.Screen
+                  name="login-screen"
+                  options={{
+                    header: () => <RouteHeader />,
+                    headerShown: true,
+                  }}
+                />
 
-          <Stack.Screen
-            name="product-details-screen"
-            options={{
-              header: () => <RouteHeader>Detalhes do produto</RouteHeader>,
-              headerShown: true,
-            }}
-          />
-        </Stack>
-      </ThemeProvider>
-    </FavoritesProvider>
+                <Stack.Screen
+                  name="product-details-screen"
+                  options={{
+                    header: () => (
+                      <RouteHeader>Detalhes do produto</RouteHeader>
+                    ),
+                    headerShown: true,
+                  }}
+                />
+              </Stack>
+            </ThemeProvider>
+          </CartProvider>
+        </FavoritesProvider>
+      </CurrencyProvider>
+    </FilterProvider>
   );
 }

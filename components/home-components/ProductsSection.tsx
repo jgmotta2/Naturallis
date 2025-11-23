@@ -1,4 +1,5 @@
 import { CONTAINER_PADDING } from "@/constants/Container";
+import { FilterState } from "@/context/FilterContext";
 import { filterProducts, getCategoryLabel } from "@/helpers/ProductFilter";
 import { useProducts } from "@/hooks/useProducts";
 import {
@@ -13,22 +14,13 @@ import { ProductCard } from "./ProductCard";
 
 type Props = {
   currency: string;
-  selectedCategory: string | null;
-  searchText: string;
+  filters: FilterState;
 };
 
-export function ProductsSection({
-  currency,
-  selectedCategory,
-  searchText,
-}: Props) {
+export function ProductsSection({ currency, filters }: Props) {
   const { products, isLoading } = useProducts(currency);
 
-  const filteredProducts = filterProducts(
-    products,
-    selectedCategory,
-    searchText
-  );
+  const filteredProducts = filterProducts(products, filters);
 
   if (isLoading) {
     return (
@@ -45,7 +37,6 @@ export function ProductsSection({
           <Text style={styles.text} size="big" isBold>
             Produtos
           </Text>
-
           <View style={styles.productList}>
             {filteredProducts.length > 0 ? (
               filteredProducts.map((item) => (
@@ -58,7 +49,7 @@ export function ProductsSection({
                       ? item.convertedPrice
                       : item.price
                   }
-                  category={getCategoryLabel(selectedCategory)}
+                  category={getCategoryLabel(filters.categoryId)}
                   image={item.imageUrl || "https://placehold.co/150.png"}
                   currency={currency}
                 />

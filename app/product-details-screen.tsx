@@ -1,14 +1,17 @@
 import { Button } from "@/components/Button";
 import { Text, View } from "@/components/Themed";
 import { CONTAINER_PADDING } from "@/constants/Container";
+import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
 import { formatCurrency } from "@/helpers/FormatCurrency";
+import { orderService } from "@/services/order";
 import { Product, productService } from "@/services/products";
 import { Ionicons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   Image,
   StyleSheet,
   TouchableOpacity,
@@ -18,14 +21,13 @@ export default function ProductDetailsScreen() {
   const params = useLocalSearchParams<{ id: string; currency: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isBuying, setIsBuying] = useState(false);
 
-  // Hook dos favoritos
+  const { addToCart } = useCart();
   const { isFavorite, toggleFavorite } = useFavorites();
 
   useEffect(() => {
-    if (params.id) {
-      fetchProduct();
-    }
+    if (params.id) fetchProduct();
   }, [params.id, params.currency]);
 
   async function fetchProduct() {
@@ -40,6 +42,42 @@ export default function ProductDetailsScreen() {
       console.error(error);
     } finally {
       setIsLoading(false);
+    }
+  }
+
+  function handleAddToCart() {
+    if (product) {
+      addToCart(product);
+      Alert.alert("Sucesso", "Produto adicionado ao carrinho!");
+    }
+  }
+
+  function handleBuyNow() {
+    if (!product) return;
+    Alert.alert(
+      "Finalizar Compra",
+      `Deseja confirmar a compra de: ${product.description}?`,
+      [
+        { text: "Cancelar", style: "cancel" },
+        { text: "Confirmar", onPress: processDirectOrder },
+      ]
+    );
+  }
+
+  async function processDirectOrder() {
+    if (!product) return;
+    try {
+      setIsBuying(true);
+      await orderService.createOrder({
+        items: [{ productId: product.id, quantity: 1 }],
+      });
+      Alert.alert("Sucesso", "Pedido realizado!", [
+        { text: "OK", onPress: () => router.replace("/(tabs)/home-screen") },
+      ]);
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível processar a compra.");
+    } finally {
+      setIsBuying(false);
     }
   }
 
@@ -62,9 +100,8 @@ export default function ProductDetailsScreen() {
     product.convertedPrice && product.convertedPrice > 0
       ? product.convertedPrice
       : product.price;
-
   const displayCurrency = params.currency || product.currency || "BRL";
-
+  const hasStock = (product.stock || 0) > 0;
   const isFav = isFavorite(product.id);
 
   return (
@@ -73,12 +110,11 @@ export default function ProductDetailsScreen() {
         {product.description}
       </Text>
 
-      <View style={styles.imageContainer}>
+      <View>
         <Image
           style={styles.image}
           source={{ uri: product.imageUrl || "https://placehold.co/300.png" }}
         />
-
         <TouchableOpacity
           style={styles.favoriteButton}
           onPress={() => toggleFavorite(product)}
@@ -87,7 +123,7 @@ export default function ProductDetailsScreen() {
           <Ionicons
             name={isFav ? "heart" : "heart-outline"}
             size={24}
-            color={isFav ? "#41744E" : "#41744E"} // Pode mudar para vermelho se preferir
+            color="#41744E"
           />
         </TouchableOpacity>
       </View>
@@ -96,13 +132,10 @@ export default function ProductDetailsScreen() {
 
       <Text isBold>{formatCurrency(displayPrice, displayCurrency)}</Text>
 
-      <Text
-        size="small"
-        style={{ color: (product.stock || 0) > 0 ? "#41744E" : "red" }}
-      >
-        {(product.stock || 0) > 0
+      <Text size="small">
+        {hasStock
           ? `Estoque disponível: ${product.stock} unidades`
-          : "Produto esgotado"}
+          : "Produto não disponível"}
       </Text>
 
       <Text>
@@ -112,8 +145,15 @@ export default function ProductDetailsScreen() {
       </Text>
 
       <View style={styles.buttons}>
-        <Button disabled={(product.stock || 0) === 0}>Comprar agora</Button>
-        <Button variant="secondary" disabled={(product.stock || 0) === 0}>
+        <Button onPress={handleBuyNow} disabled={!hasStock || isBuying}>
+          {isBuying ? "Processando..." : "Comprar agora"}
+        </Button>
+
+        <Button
+          variant="secondary"
+          onPress={handleAddToCart}
+          disabled={!hasStock || isBuying}
+        >
           Adicionar ao carrinho
         </Button>
       </View>

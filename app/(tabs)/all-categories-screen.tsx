@@ -3,9 +3,28 @@ import { FilterButton } from "@/components/FilterButton";
 import { Input } from "@/components/Input";
 import { Text, View } from "@/components/Themed";
 import { CONTAINER_PADDING } from "@/constants/Container";
-import { StyleSheet } from "react-native";
+import { useState } from "react";
+import { ScrollView, StyleSheet } from "react-native";
+
+const ALL_CATEGORIES = [
+  "Alimentos naturais",
+  "Chás e infusões",
+  "Produtos Agrícolas",
+  "Suplementos Naturais",
+  "Alimentos funcionais e sem glúten",
+  "Bem-estar e estilo de vida",
+  "Temperos e condimentos Naturais",
+  "Grãos, sementes e oleaginosas",
+  "Bebidas naturais e funcionais",
+];
 
 export default function AllCategoriesScreen() {
+  const [searchText, setSearchText] = useState("");
+
+  const filteredCategories = ALL_CATEGORIES.filter((category) =>
+    category.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.textHeader}>
@@ -15,41 +34,35 @@ export default function AllCategoriesScreen() {
       </View>
       <View style={styles.header}>
         <View style={{ flex: 1 }}>
-          <Input iconName="search" placeholder="Busque aqui" />
+          <Input
+            iconName="search"
+            placeholder="Busque aqui"
+            value={searchText}
+            onChangeText={setSearchText}
+          />
         </View>
         <View>
           <FilterButton />
         </View>
       </View>
-      <View style={styles.buttons}>
-        <Button variant="tertiary" href="/(tabs)/home-screen">
-          Alimentos naturais
-        </Button>
-        <Button variant="tertiary" href="/(tabs)/home-screen">
-          Chás e infusões
-        </Button>
-        <Button variant="tertiary" href="/(tabs)/home-screen">
-          Produtos Agrícolas
-        </Button>
-        <Button variant="tertiary" href="/(tabs)/home-screen">
-          Suplementos Naturais
-        </Button>
-        <Button variant="tertiary" href="/(tabs)/home-screen">
-          Alimentos funcionais e sem glúten
-        </Button>
-        <Button variant="tertiary" href="/(tabs)/home-screen">
-          Bem-estar e estilo de vida
-        </Button>
-        <Button variant="tertiary" href="/(tabs)/home-screen">
-          Temperos e condimentos Naturais
-        </Button>
-        <Button variant="tertiary" href="/(tabs)/home-screen">
-          Grãos, sementes e oleaginosas
-        </Button>
-        <Button variant="tertiary" href="/(tabs)/home-screen">
-          Bebidas naturais e funcionais
-        </Button>
-      </View>
+
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.buttons}>
+          {filteredCategories.length > 0 ? (
+            filteredCategories.map((category, index) => (
+              <Button key={index} variant="tertiary" href="/(tabs)/home-screen">
+                {category}
+              </Button>
+            ))
+          ) : (
+            <View style={styles.emptyState}>
+              <Text style={{ color: "#718096" }}>
+                Nenhuma categoria encontrada.
+              </Text>
+            </View>
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -73,8 +86,17 @@ const styles = StyleSheet.create({
     padding: CONTAINER_PADDING,
   },
 
+  scrollContent: {
+    paddingBottom: 20,
+  },
+
   buttons: {
     gap: 10,
     padding: CONTAINER_PADDING,
+  },
+
+  emptyState: {
+    alignItems: "center",
+    marginTop: 20,
   },
 });

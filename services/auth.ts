@@ -27,13 +27,13 @@ const USER_NAME_KEY = "user_name";
 export const authService = {
   async login(credentials: SigninDTO): Promise<void> {
     const response = await api.post<AuthResponse>("/auth/signin", credentials);
-
     const { token, user } = response.data;
 
     if (token) {
       await SecureStore.setItemAsync(AUTH_KEY, token);
+
       if (user && user.name) {
-        await SecureStore.setItemAsync(USER_NAME_KEY, user.name);
+        await SecureStore.setItemAsync("user_name", user.name);
       }
     } else {
       throw new Error("Token não encontrado na resposta");
