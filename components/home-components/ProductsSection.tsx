@@ -1,7 +1,13 @@
 import { CONTAINER_PADDING } from "@/constants/Container";
 import { Product, productService } from "@/services/products";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text } from "../Themed";
 import { ProductCard } from "./ProductCard";
 
@@ -18,6 +24,7 @@ export function ProductsSection() {
       const data = await productService.getAll();
       setProducts(data);
     } catch (error) {
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -32,42 +39,42 @@ export function ProductsSection() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text} size="big" isBold>
-        Produtos
-      </Text>
-      <View style={styles.productList}>
-        {products.map((item) => (
-          <ProductCard
-            key={item.id}
-            id={item.id}
-            title={item.name}
-            price={item.price}
-            category={item.category || "Geral"}
-            image={item.image || "https://placehold.co/150@3x.png"}
-          />
-        ))}
-      </View>
-    </View>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
+          <Text style={styles.text} size="big" isBold>
+            Produtos
+          </Text>
+          <View style={styles.productList}>
+            {products.map((item) => (
+              <ProductCard
+                key={item.id}
+                id={item.id.toString()}
+                title={item.description}
+                price={
+                  item.convertedPrice && item.convertedPrice > 0
+                    ? item.convertedPrice
+                    : item.price
+                }
+                category={"Geral"}
+                image={item.imageUrl || "https://placehold.co/150.png"}
+              />
+            ))}
+          </View>
+        </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  text: {
-    paddingHorizontal: CONTAINER_PADDING,
-    marginBottom: 10,
-  },
-  container: {
-    flex: 1,
-    paddingVertical: 10,
-  },
+  text: { paddingHorizontal: CONTAINER_PADDING, bottom: 10 },
+  container: { flex: 1, paddingVertical: 10 },
   loadingContainer: {
-    paddingVertical: 40,
-    alignItems: "center",
-  },
-  productList: {
     flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 20,
   },
+  productList: { flex: 1, flexDirection: "row", flexWrap: "wrap" },
 });

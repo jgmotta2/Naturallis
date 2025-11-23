@@ -1,11 +1,16 @@
 import api from "./api";
 
 export interface Product {
-  id: string;
-  name: string;
+  id: number;
+  description: string;
   price: number;
+  currency: string;
+  stock?: number;
+  imageUrl?: string;
+  convertedPrice?: number;
+  enviroment?: string;
+  name?: string;
   category?: string;
-  description?: string;
   image?: string;
 }
 
@@ -18,11 +23,17 @@ interface PageableResponse<T> {
 }
 
 export const productService = {
-  async getAll(page = 0, size = 10, name = ""): Promise<Product[]> {
+  async getAll(page = 0, size = 10, currency = "BRL"): Promise<Product[]> {
     try {
-      const response = await api.get<PageableResponse<Product>>("/products", {
-        params: { page, size, name },
-      });
+      const response = await api.get<PageableResponse<Product>>(
+        `/products/${currency}`,
+        {
+          params: {
+            page,
+            size,
+          },
+        }
+      );
       return response.data.content;
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
@@ -30,8 +41,8 @@ export const productService = {
     }
   },
 
-  async getById(id: string): Promise<Product> {
-    const response = await api.get<Product>(`/products/${id}`);
+  async getById(id: number, currency = "BRL"): Promise<Product> {
+    const response = await api.get<Product>(`/products/${id}/${currency}`);
     return response.data;
   },
 };

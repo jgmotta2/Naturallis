@@ -12,14 +12,28 @@ export interface SignupDTO {
   password?: string;
 }
 
+interface AuthResponse {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+  };
+  token: string;
+}
+
 const AUTH_KEY = "user_token";
 
 export const authService = {
   async login(credentials: SigninDTO): Promise<void> {
-    const response = await api.post<string>("/auth/signin", credentials);
-    const token = response.data;
+    const response = await api.post<AuthResponse>("/auth/signin", credentials);
 
-    await SecureStore.setItemAsync(AUTH_KEY, token);
+    const { token } = response.data;
+
+    if (token) {
+      await SecureStore.setItemAsync(AUTH_KEY, token);
+    } else {
+      throw new Error("Token não encontrado na resposta");
+    }
   },
 
   async register(data: SignupDTO): Promise<void> {
