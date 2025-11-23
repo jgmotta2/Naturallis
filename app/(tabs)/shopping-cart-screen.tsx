@@ -16,9 +16,26 @@ export default function ShoppingCartScreen() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  async function handleCheckout() {
+  function handleCheckoutConfirmation() {
     if (cartItems.length === 0) return;
 
+    Alert.alert(
+      "Finalizar Compra",
+      `Valor total: ${formatCurrency(
+        cartTotal,
+        currency
+      )}\nDeseja confirmar o pedido?`,
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Confirmar",
+          onPress: submitOrder,
+        },
+      ]
+    );
+  }
+
+  async function submitOrder() {
     try {
       setIsSubmitting(true);
 
@@ -75,7 +92,10 @@ export default function ShoppingCartScreen() {
           </View>
 
           <View style={styles.button}>
-            <Button onPress={handleCheckout} disabled={isSubmitting}>
+            <Button
+              onPress={handleCheckoutConfirmation}
+              disabled={isSubmitting}
+            >
               {isSubmitting ? "Processando..." : "Finalizar compra"}
             </Button>
           </View>

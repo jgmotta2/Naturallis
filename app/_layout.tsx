@@ -94,6 +94,14 @@ function RootLayoutNav() {
                     headerShown: true,
                   }}
                 />
+
+                <Stack.Screen
+                  name="register-product-screen"
+                  options={{
+                    header: () => <RouteHeader>Cadastrar produto</RouteHeader>, // Header customizado
+                    headerShown: true,
+                  }}
+                />
               </Stack>
             </ThemeProvider>
           </CartProvider>

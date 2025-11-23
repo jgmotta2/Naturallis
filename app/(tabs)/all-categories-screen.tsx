@@ -3,8 +3,16 @@ import { FilterButton } from "@/components/FilterButton";
 import { Input } from "@/components/Input";
 import { Text, View } from "@/components/Themed";
 import { CONTAINER_PADDING } from "@/constants/Container";
+import { useFilter } from "@/context/FilterContext";
+import { router } from "expo-router";
 import { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
+
+const CATEGORY_MAP: Record<string, string> = {
+  "Alimentos naturais": "1",
+  "Chás e infusões": "3",
+  "Bem-estar e estilo de vida": "2",
+};
 
 const ALL_CATEGORIES = [
   "Alimentos naturais",
@@ -21,9 +29,19 @@ const ALL_CATEGORIES = [
 export default function AllCategoriesScreen() {
   const [searchText, setSearchText] = useState("");
 
+  const { updateFilter } = useFilter();
+
   const filteredCategories = ALL_CATEGORIES.filter((category) =>
     category.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  function handleCategoryPress(categoryName: string) {
+    const categoryId = CATEGORY_MAP[categoryName] || null;
+
+    updateFilter("home", "categoryId", categoryId);
+
+    router.push("/(tabs)/home-screen");
+  }
 
   return (
     <View style={styles.container}>
@@ -50,7 +68,11 @@ export default function AllCategoriesScreen() {
         <View style={styles.buttons}>
           {filteredCategories.length > 0 ? (
             filteredCategories.map((category, index) => (
-              <Button key={index} variant="tertiary" href="/(tabs)/home-screen">
+              <Button
+                key={index}
+                variant="tertiary"
+                onPress={() => handleCategoryPress(category)}
+              >
                 {category}
               </Button>
             ))
@@ -70,6 +92,7 @@ export default function AllCategoriesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
   },
 
   textHeader: {

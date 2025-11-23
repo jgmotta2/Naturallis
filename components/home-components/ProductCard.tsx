@@ -1,7 +1,19 @@
-import { CONTAINER_PADDING } from "@/constants/Container";
 import { formatCurrency } from "@/helpers/FormatCurrency";
 import { router } from "expo-router";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+
+const screenWidth = Dimensions.get("window").width;
+
+const cardMargin = 8;
+
+const cardWidth = screenWidth / 2 - cardMargin * 3;
 
 type Props = {
   price: number;
@@ -22,14 +34,11 @@ export function ProductCard(props: Props) {
   return (
     <TouchableOpacity onPress={handleGoToDetailsScreen}>
       <View style={styles.container}>
-        <Image
-          style={styles.image}
-          source={{
-            uri: props.image,
-          }}
-        />
+        <Image style={styles.image} source={{ uri: props.image }} />
         <Text style={styles.category}>{props.category}</Text>
-        <Text style={styles.title}>{props.title}</Text>
+        <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
+          {props.title}
+        </Text>
         <Text style={styles.price}>
           {formatCurrency(props.price, props.currency)}
         </Text>
@@ -40,35 +49,32 @@ export function ProductCard(props: Props) {
 
 const styles = StyleSheet.create({
   container: {
+    width: cardWidth,
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-    margin: 12,
-    padding: 16,
-    gap: 12,
-    paddingLeft: CONTAINER_PADDING,
+    margin: cardMargin,
+    padding: 12,
+    gap: 5,
   },
   image: {
-    width: 140,
-    height: 140,
+    width: "100%",
+    height: 120,
     backgroundColor: "transparent",
   },
   category: {
-    fontSize: 12,
+    fontSize: 10,
     color: "#718096",
     fontWeight: "500",
     textTransform: "uppercase",
-    letterSpacing: 0.5,
   },
   title: {
-    fontSize: 16,
+    fontSize: 14,
     textAlign: "center",
     color: "#2D3748",
     fontWeight: "600",
-    lineHeight: 22,
-    paddingHorizontal: 4,
   },
   price: {
-    fontSize: 18,
+    fontSize: 16,
     color: "#41744E",
     fontWeight: "700",
   },

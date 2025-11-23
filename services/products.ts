@@ -24,6 +24,15 @@ interface PageableResponse<T> {
   number: number;
 }
 
+export interface ProductDTO {
+  description: string;
+  brand: string;
+  model: string;
+  currency: string;
+  price: number;
+  imageUrl: string;
+}
+
 export const productService = {
   async getAll(page = 0, size = 10, currency = "BRL"): Promise<Product[]> {
     try {
@@ -45,6 +54,11 @@ export const productService = {
 
   async getById(id: number, currency = "BRL"): Promise<Product> {
     const response = await api.get<Product>(`/products/${id}/${currency}`);
+    return response.data;
+  },
+
+  async create(product: ProductDTO): Promise<Product> {
+    const response = await api.post<Product>("/ws/products", product);
     return response.data;
   },
 };

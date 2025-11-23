@@ -1,7 +1,9 @@
 import { Text, View } from "@/components/Themed";
 import { CONTAINER_PADDING } from "@/constants/Container";
+import { authService } from "@/services/auth";
 import { Feather } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 type MenuItem = {
@@ -22,12 +24,34 @@ const menuItems: MenuItem[] = [
 ];
 
 export default function UserScreen() {
-  function handleItemPress(item: MenuItem) {
+  const [userName, setUserName] = useState("");
+
+  useFocusEffect(
+    useCallback(() => {
+      async function loadUserData() {
+        try {
+          const name = await authService.getUserName();
+          setUserName(name || "Usuário");
+        } catch (error) {
+          console.log("Erro ao carregar dados do usuário", error);
+        }
+      }
+      loadUserData();
+    }, [])
+  );
+
+  async function handleItemPress(item: MenuItem) {
     if (item.id === "8") {
+      await authService.logout();
       router.replace("/");
+      return;
+    }
+
+    if (item.id === "4") {
+      router.push("/register-product-screen");
+      return;
     }
   }
-
   const renderItem = ({ item }: { item: MenuItem }) => (
     <TouchableOpacity
       style={styles.menuItem}
@@ -42,8 +66,10 @@ export default function UserScreen() {
     <View style={styles.container}>
       <View style={styles.imageAndName}>
         <Image source={require("@/assets/images/user-image.png")}></Image>
-        <Text isBold>Pedro Pascal</Text>
+
+        <Text isBold>{userName}</Text>
       </View>
+
       <FlatList
         data={menuItems}
         renderItem={renderItem}
