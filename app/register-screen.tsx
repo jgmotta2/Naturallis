@@ -37,23 +37,7 @@ export default function RegisterScreen() {
         { text: "OK", onPress: () => router.replace("/login-screen") },
       ]);
     } catch (error: any) {
-      console.log("--- INÍCIO DO ERRO ---");
-      console.log("Erro completo:", error);
-      if (error.response) {
-        console.log("Dados da resposta:", error.response.data);
-        console.log("Status:", error.response.status);
-        console.log("Headers:", error.response.headers);
-      } else if (error.request) {
-        console.log("Requisição feita mas sem resposta:", error.request);
-      } else {
-        console.log("Erro na configuração:", error.message);
-      }
-      console.log("--- FIM DO LOG ---");
-
-      Alert.alert(
-        "Erro",
-        "Não foi possível criar a conta. Verifique o console (terminal) para detalhes."
-      );
+      Alert.alert("Erro", "Não foi possível criar a conta.");
     } finally {
       setIsLoading(false);
     }
