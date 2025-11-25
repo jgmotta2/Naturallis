@@ -1,6 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
 
-// Tipo dos Filtros
 export type FilterState = {
   search: string;
   categoryId: string | null;
@@ -10,22 +9,18 @@ export type FilterState = {
   onlyInterestFree: boolean;
 };
 
-// Tipo da 'Fonte' (quem está chamando)
 export type FilterSource = "home" | "favorites";
 
 type FilterContextData = {
-  // Estados separados
   homeFilters: FilterState;
   favoritesFilters: FilterState;
 
-  // Função genérica para atualizar
   updateFilter: (
     source: FilterSource,
     key: keyof FilterState,
     value: any
   ) => void;
 
-  // Função para limpar
   resetFilters: (source: FilterSource) => void;
 };
 
@@ -41,7 +36,6 @@ const INITIAL_STATE: FilterState = {
 };
 
 export function FilterProvider({ children }: { children: ReactNode }) {
-  // Dois estados independentes
   const [homeFilters, setHomeFilters] = useState<FilterState>({
     ...INITIAL_STATE,
   });
@@ -63,7 +57,6 @@ export function FilterProvider({ children }: { children: ReactNode }) {
 
   function resetFilters(source: FilterSource) {
     if (source === "home") {
-      // Mantemos a busca na home se quiser, ou limpa tudo. Vamos limpar tudo para simplificar.
       setHomeFilters({ ...INITIAL_STATE });
     } else {
       setFavoritesFilters({ ...INITIAL_STATE });
